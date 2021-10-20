@@ -1,0 +1,24 @@
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  max-width: 15%;
+}
+
+.container__form--btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
