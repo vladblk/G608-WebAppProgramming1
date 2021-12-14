@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+
+    <style>
+        a {
+            display: block;
+            text-decoration: none;
+            color: black;
+            margin-top: 10px;
+        }
+
+        #delete-btn {
+            color: red;
+        }
+
+        .completed {
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+    
+    <h1>Todo App</h1>
+
+    <div>
+        <form action="/add" method="POST">
+            <label for="todo">Enter todo</label>
+            <input type="text" id="todo" name="todo">
+
+            <button type="submit">Add Todo</button>
+        </form>
+    </div>
+
+    <div>
+        {% for todo in all_todos %}
+            <div style="display: flex;">
+                {% if todo.complete %}
+                    <a href="/update/{{ todo.id }}" class="completed"> {{ todo.title }} </a>
+                {% else %}
+                    <a href="/update/{{ todo.id }}"> {{ todo.title }} </a>
+                {% endif %}
+
+                <a href="/delete/{{ todo.id }}" id="delete-btn">Delete Todo</a>
+            </div>  
+        {% endfor %}
+    </div>
+
+</body>
+</html>
