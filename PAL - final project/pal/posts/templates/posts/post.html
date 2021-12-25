@@ -4,4 +4,25 @@
 
 <h1>POST TEMPLATE</h1>
 
+<div>
+    <h3>{{ post.name }}</h3>
+    <p>{{ post.description }}</p>
+</div>
+
+<h3>Comments</h3>
+<hr>
+
+<div>
+    {% for comment in comments %}
+
+        <div>
+            <p>@{{ comment.user }} - {{ comment.created|timesince }} ago</p>
+            <p>{{ comment.body }}</p>
+        </div>
+
+        <hr>
+
+    {% endfor %}
+</div>
+
 {% endblock %}
