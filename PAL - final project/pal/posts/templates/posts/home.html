@@ -4,16 +4,25 @@
 
 <h1>HOMEPAGE TEMPLATE</h1>
 
-{% for post in posts %}
+<div>
 
-    <div>
-        <a href="{% url 'post' post.id %}">{{ post.name }}</a>
-        <p>Topic: {{ post.topic }}</p>
-        <p>Posted by <b>@{{ post.user }}</b> - {{ post.created|timesince }} ago</p>
-    </div>
+    <a href="{% url 'create-post' %}">Create Post</a>
 
-    <hr>
+    {% for post in posts %}
 
-{% endfor %}
+        <div>
+            <a href="{% url 'post' post.id %}">{{ post.name }}</a>
+            <p>Topic: {{ post.topic }}</p>
+            <p>Posted by <b>@{{ post.user }}</b> - {{ post.created|timesince }} ago</p>
 
-{% endblock %}
+            <a href="{% url 'update-post' post.id %}">update post</a>
+            <a href="{% url 'delete-post' post.id %}">delete post</a>
+        </div>
+
+        <hr>
+
+    {% endfor %}
+</div>
+
+
+{% endblock content %}

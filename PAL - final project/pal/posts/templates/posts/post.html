@@ -7,6 +7,9 @@
 <div>
     <h3>{{ post.name }}</h3>
     <p>{{ post.description }}</p>
+
+    <a href="{% url 'update-post' post.id %}">update post</a>
+    <a href="{% url 'delete-post' post.id %}">delete post</a>
 </div>
 
 <h3>Comments</h3>
@@ -25,4 +28,4 @@
     {% endfor %}
 </div>
 
-{% endblock %}
+{% endblock content %}
