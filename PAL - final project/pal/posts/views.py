@@ -4,4 +4,7 @@ from django.http import HttpResponse
 # Create your views here.
 
 def index(request):
-  return HttpResponse('Hello from the posts index!')
+  return render(request, 'posts/home.html')
+
+def post(request):
+  return render(request, 'posts/post.html')
