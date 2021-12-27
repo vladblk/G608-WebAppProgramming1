@@ -1,5 +1,26 @@
+<style>
+    nav {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+</style>
+
 <nav>
-  <a href="">PAL</a>
+    <a href="">PAL</a>
+
+    <div>
+        {% if request.user.is_authenticated %}
+            <p>Hello, {{ request.user.username }} </p>
+            <a href="{% url 'user:log-out' %}">Log Out</a>
+        {% else %}
+            <a href="{% url 'user:sign-in' %}">Sign In</a>
+            <a href="{% url 'user:sign-up' %}">Sign Up</a>
+        {% endif %}
+    </div>
+    
 </nav>
+
+
 
 <hr />
