@@ -6,17 +6,17 @@
 
 <div>
 
-    <a href="{% url 'create-post' %}">Create Post</a>
+    <a href="{% url 'posts:create-post' %}">Create Post</a>
 
     {% for post in posts %}
 
         <div>
-            <a href="{% url 'post' post.id %}">{{ post.name }}</a>
+            <a href="{% url 'posts:post' post.id %}">{{ post.name }}</a>
             <p>Topic: {{ post.topic }}</p>
             <p>Posted by <b>@{{ post.user }}</b> - {{ post.created|timesince }} ago</p>
 
-            <a href="{% url 'update-post' post.id %}">update post</a>
-            <a href="{% url 'delete-post' post.id %}">delete post</a>
+            <a href="{% url 'posts:update-post' post.id %}">update post</a>
+            <a href="{% url 'posts:delete-post' post.id %}">delete post</a>
         </div>
 
         <hr>
