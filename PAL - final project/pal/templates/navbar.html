@@ -7,7 +7,7 @@
 </style>
 
 <nav>
-    <a href="">PAL</a>
+    <a href="{% url 'posts:index' %}">PAL</a>
 
     <div>
         {% if request.user.is_authenticated %}

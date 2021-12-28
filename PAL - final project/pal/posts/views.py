@@ -18,7 +18,16 @@ def index(request):
 
 def post(request, pk):
     post = Post.objects.get(id=pk)
-    comments = Comment.objects.all().order_by('-created')
+    comments = post.comment_set.all().order_by('-created') # get the comments from each post
+
+    if request.method == 'POST':
+        Comment.objects.create(
+            user = request.user,
+            post = post,
+            body = request.POST.get('comment')
+        )
+
+        return redirect('posts:post', pk=post.id)
 
     context = {
     'post': post,
@@ -78,7 +87,7 @@ def delete_post(request, pk):
     post = Post.objects.get(id=pk)
 
     if request.user != post.user:
-        return render(request, 'posts/not_allowed.html')
+        return render(request, 'not_allowed.html')
 
     if request.method == 'POST':
         post.delete()
@@ -90,4 +99,4 @@ def delete_post(request, pk):
         'to_delete': post
     }
 
-    return render(request, 'posts/delete.html', context)
+    return render(request, 'delete.html', context)
