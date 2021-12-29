@@ -9,6 +9,8 @@
 
     <input type="submit" value="Submit">
     <a href="{{ request.META.HTTP_REFERER }}">Cancel</a>
+
+    <input type="hidden" name="next" value={{ request.GET.next }}>
 </form>
 
 {% endblock content %}

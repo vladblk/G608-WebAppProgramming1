@@ -1,8 +1,35 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
+from posts import forms
 from .models import Comment
+from .forms import CommentForm
+from posts.models import Post
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+
+@login_required(login_url='user:sign-in')
+def update_comment(request, pk):
+    # post = Post.objects.get(id=post_id)
+    comment = Comment.objects.get(id=pk)
+    form = CommentForm(instance=comment)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST, instance=comment)
+        next = request.POST.get('next', '/')
+
+        if form.is_valid():
+            form.save()
+
+            return HttpResponseRedirect(next)
+
+    context = {
+        'comment': comment,
+        'form': form
+    }
+
+    return render(request, 'comments/comment_form.html', context)
+
 
 @login_required(login_url='user:sign-in')
 def delete_comment(request, pk):
@@ -12,10 +39,10 @@ def delete_comment(request, pk):
         return render(request, 'not_allowed.html')
 
     if request.method == 'POST':
+        next = request.POST.get('next', '/')
         comment.delete()
 
-        return redirect('posts:index')
-        # return redirect(request.META.get('HTTP_REFERER')) # NOT WORKING!!!
+        return HttpResponseRedirect(next)
 
     context = {
         'to_delete': comment

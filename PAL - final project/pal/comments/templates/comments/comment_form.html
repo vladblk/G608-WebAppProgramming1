@@ -1,0 +1,17 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div>
+    <form action="" method="POST">
+        {% csrf_token %}
+
+        {{ form }}
+
+        <input type="hidden" name="next" value="{{ request.GET.next }}">
+
+        <input type="submit" value="Submit">
+    </form>
+</div>
+
+{% endblock content %}

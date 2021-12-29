@@ -9,8 +9,8 @@
     <p>{{ post.description }}</p>
 
     {% if request.user == post.user %}
-        <a href="{% url 'posts:update-post' post.id %}">update post</a>
-        <a href="{% url 'posts:delete-post' post.id %}">delete post</a>
+        <a href="{% url 'posts:update-post' post.id %}?next={{ request.path|urlencode }}">update post</a>
+        <a href="{% url 'posts:delete-post' post.id %}?next={{ request.path|urlencode }}">delete post</a>
     {% endif %}
 </div>
 
@@ -36,8 +36,9 @@
             <p>@{{ comment.user }} - {{ comment.created|timesince }} ago</p>
             <p>{{ comment.body }}</p>
 
-            {% if request.user == comment.id %}
-                <a href="{% url 'comments:delete-comment' comment.id %}">delete comment</a>
+            {% if request.user == comment.user %}
+                <a href="{% url 'comments:update-comment' comment.id %}?next={{ request.path|urlencode }}">update comment</a>
+                <a href="{% url 'comments:delete-comment' comment.id %}?next={{ request.path|urlencode }}">delete comment</a>
             {% endif %}
         </div>
 
