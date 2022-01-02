@@ -1,0 +1,20 @@
+@import url('base.css');
+@import url('navbar.css');
+
+.card-text {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.card-header p {
+    margin-bottom: 0;
+}
+
+.btn-outline-primary {
+    margin-left: 1rem;
+}
+
+.navbar {
+    padding: .8rem 2rem;
+}

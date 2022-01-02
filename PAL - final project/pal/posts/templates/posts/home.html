@@ -2,15 +2,13 @@
 
 {% block content %}
 
-<h1>HOMEPAGE TEMPLATE</h1>
+<div class="mt-5">
 
-<div>
-
-    <a href="{% url 'posts:create-post' %}">Create Post</a>
+    <a href="{% url 'posts:create-post' %}" class="btn btn-outline-success">Create Post</a>
 
     {% for post in posts %}
 
-        <div>
+        {% comment %} <div>
             <a href="{% url 'posts:post' post.id %}">{{ post.name }}</a>
             <p>Topic: {{ post.topic }}</p>
             <p>Posted by <b>@{{ post.user }}</b> - {{ post.created|timesince }} ago</p>
@@ -19,11 +17,27 @@
                 <a href="{% url 'posts:update-post' post.id %}?next={{ request.path|urlencode }}">update post</a>
                 <a href="{% url 'posts:delete-post' post.id %}?next={{ request.path|urlencode }}">delete post</a>
             {% endif %}
-        </div>
+        </div> {% endcomment %}
 
-        <hr>
+        <div class="card mt-3">
+            <div class="card-header">
+                <p>Posted by <b>@{{ post.user }}</b> - {{ post.created|timesince }} ago</p>
+                <small>Topic: {{ post.topic }}</small>
+            </div>
+            <div class="card-body">
+              <h5>
+                <a class="card-title" href="{% url 'posts:post' post.id %}">{{ post.name }}</a>
+              </h5>
+              <p class="card-text">{{ post.description }}</p>
+            {% if request.user == post.user %}
+                <a href="{% url 'posts:update-post' post.id %}?next={{ request.path|urlencode }}" class="btn btn-outline-secondary">update</a>
+                <a href="{% url 'posts:delete-post' post.id %}?next={{ request.path|urlencode }}" class="btn btn-outline-danger">delete</a>
+            {% endif %}
+            </div>
+          </div>
 
     {% endfor %}
+
 </div>
 
 
