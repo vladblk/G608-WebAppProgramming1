@@ -84,3 +84,9 @@
     font-size: 12px;
     margin-bottom: 1rem;
 }
+
+.form-delete__btns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

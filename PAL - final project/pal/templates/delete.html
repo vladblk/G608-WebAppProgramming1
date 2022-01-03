@@ -2,15 +2,30 @@
 
 {% block content %}
 
-<form action="" method="POST">
-    {% csrf_token %}
 
-    <h3>Are you sure you want to delete "{{ to_delete }}" ?</h3>
+<div class="modal-dialog">
+    <div class="modal-content">
+        <form action="" method="POST">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete</h5>
+            </div>
 
-    <input type="submit" value="Submit">
-    <a href="{{ request.META.HTTP_REFERER }}">Cancel</a>
+            <div class="modal-body">
+                {% csrf_token %}
+            
+                <p>Are you sure you want to delete <b>"{{ to_delete }}"</b> ?</p>
+            
+                <input type="hidden" name="next" value={{ request.GET.next }}>
+            </div>
 
-    <input type="hidden" name="next" value={{ request.GET.next }}>
-</form>
+            <div class="modal-footer">
+                <a href="{{ request.META.HTTP_REFERER }}">Cancel</a>
+                <input type="submit" value="Delete" class="btn btn-danger">
+            </div>
+        </form>
+    </div>
+</div>
+
+  
 
 {% endblock content %}

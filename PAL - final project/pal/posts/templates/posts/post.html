@@ -6,13 +6,17 @@
 <div class="modal fade" id="editCommentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 </div><!-- /.modal -->
 
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div><!-- /.modal -->
+
 <div class="mt-5">
     <h1>{{ post.name }}</h3>
     <p>{{ post.description }}</p>
 
     {% if request.user == post.user %}
         <a href="{% url 'posts:update-post' post.id %}?next={{ request.path|urlencode }}" class="btn btn-outline-secondary" data-target="#editCommentModal">update</a>
-        <a href="{% url 'posts:delete-post' post.id %}?next={{ request.path|urlencode }}" class="btn btn-outline-danger">delete</a>
+        <a href="{% url 'posts:delete-post' post.id %}?next={{ request.path|urlencode }}" class="btn btn-outline-danger" data-target="#deleteModal">delete</a>
     {% endif %}
 </div>
 
