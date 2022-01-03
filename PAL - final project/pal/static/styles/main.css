@@ -1,6 +1,14 @@
 @import url('base.css');
 @import url('navbar.css');
 
+.navbar-brand {
+    font-size: 2rem;
+    padding: 0;
+    margin: 0;
+    margin-right: 2rem;
+    letter-spacing: .5rem;
+}
+
 .card-text {
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -38,4 +46,22 @@
 #id_name, #id_description, #id_topic {
     width: 100%;
     margin-bottom: 1rem;
+}
+
+#comment-textarea {
+    margin-bottom: 1rem;
+}
+
+.comment-container {
+    padding-left: 10px;
+    border-left: 1px solid grey;
+}
+
+.comment {
+    margin-bottom: 10px;
+}
+
+#id_body {
+    width: 100%;
+    padding: 10px;
 }

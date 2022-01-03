@@ -8,17 +8,6 @@
 
     {% for post in posts %}
 
-        {% comment %} <div>
-            <a href="{% url 'posts:post' post.id %}">{{ post.name }}</a>
-            <p>Topic: {{ post.topic }}</p>
-            <p>Posted by <b>@{{ post.user }}</b> - {{ post.created|timesince }} ago</p>
-
-            {% if request.user == post.user %}
-                <a href="{% url 'posts:update-post' post.id %}?next={{ request.path|urlencode }}">update post</a>
-                <a href="{% url 'posts:delete-post' post.id %}?next={{ request.path|urlencode }}">delete post</a>
-            {% endif %}
-        </div> {% endcomment %}
-
         <div class="card mt-3">
             <div class="card-header">
                 <p>Posted by <b>@{{ post.user }}</b> - {{ post.created|timesince }} ago</p>

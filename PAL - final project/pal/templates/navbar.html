@@ -15,14 +15,14 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">PAL</a>
+      <h1 class="navbar-brand">PAL</h1>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav me-auto mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'posts:index' %}">Home</a>
+            <a class="nav-link active" aria-current="page" href="{% url 'posts:index' %}">All Posts</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'posts:create-post' %}">Create Post</a>
@@ -34,13 +34,21 @@
           <button class="btn btn-outline-success" type="submit">Search</button>
         </form> {% endcomment %}
         
-        <div class="d-flex justify-content-center">
+        <div class="d-flex align-center">
             {% if request.user.is_authenticated %}
-                <p class="nav-item">Hello, {{ request.user.username }} </p>
-                <a href="{% url 'user:log-out' %}" class="btn btn-secondary">Log Out</a>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        Hello, {{ request.user.username }}!
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                      <li><a class="dropdown-item" href="{% url 'user:log-out' %}">Logout</a></li>
+                    </ul>
+                  </div>
             {% else %}
-                <a href="{% url 'user:sign-in' %}" class="btn btn-outline-secondary">Sign in</a>
-                <a href="{% url 'user:sign-up' %}" class="btn btn-outline-primary">Sign up</a>
+                <div>
+                    <a href="{% url 'user:sign-in' %}" class="btn btn-outline-secondary">Sign in</a>
+                    <a href="{% url 'user:sign-up' %}" class="btn btn-primary">Sign up</a>
+                </div>
             {% endif %}
         </div>
         

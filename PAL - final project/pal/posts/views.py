@@ -20,6 +20,7 @@ def index(request):
 def post(request, pk):
     post = Post.objects.get(id=pk)
     comments = post.comment_set.all().order_by('-created') # get the comments from each post
+    comments_count = post.comment_set.all().count()
 
     if request.method == 'POST':
         Comment.objects.create(
@@ -32,7 +33,8 @@ def post(request, pk):
 
     context = {
         'post': post,
-        'comments': comments
+        'comments': comments,
+        'comments_count': comments_count,
     }
 
     return render(request, 'posts/post.html', context)

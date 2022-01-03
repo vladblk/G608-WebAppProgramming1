@@ -12,7 +12,7 @@
             <input type="hidden" name="next" value="{{ request.GET.next }}">
             
             <div class="btn-container">
-                <a href="{% url 'posts:index' %}" class="btn btn-secondary">Cancel</a> 
+                <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-secondary">Cancel</a> 
                 <input type="submit" value="Submit" class="btn btn-success">
             </div>
         </form>
