@@ -36,14 +36,20 @@
     align-items: center;
 }
 
-#postForm {
+.form__container {
+    border: 2px solid grey;
+    border-radius: 10px;
+    padding: 5rem 7rem;
+}
+
+.form {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-#id_name, #id_description, #id_topic {
+#id_name, #id_description, #id_topic, #username, #password {
     width: 100%;
     margin-bottom: 1rem;
 }
@@ -64,4 +70,17 @@
 #id_body {
     width: 100%;
     padding: 10px;
+}
+
+.signup__container, .signin__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+}
+ 
+.signup__form span {
+    font-size: 12px;
+    margin-bottom: 1rem;
 }

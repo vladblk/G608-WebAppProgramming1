@@ -8,7 +8,7 @@
 
 <div class="mt-5">
     <h1>{{ post.name }}</h3>
-    <h4>{{ post.description }}</h4>
+    <p>{{ post.description }}</p>
 
     {% if request.user == post.user %}
         <a href="{% url 'posts:update-post' post.id %}?next={{ request.path|urlencode }}" class="btn btn-outline-secondary" data-target="#editCommentModal">update</a>

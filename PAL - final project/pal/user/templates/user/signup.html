@@ -2,17 +2,21 @@
 
 {% block content %}
     
-    <div>
-        <form action="" method='POST'>
-            {% csrf_token %}
+    <div class="wrapper">
+        <div class="form__container signup__form">
+            <form action="" method='POST' class="form">
+                {% csrf_token %}
 
-            {{ form.as_p }}
+                {{ form }}
 
-            <input type="submit" value="Sign Up">
-        </form>
+                <input type="submit" value="Sign up" class="btn btn-primary">
+            </form>
 
-        <p>Already got an account?</p>
-        <a href="{% url 'user:sign-in' %}">Sign In</a>
+            <div class="signin__container">
+                <p>Already got an account?</p>
+                <a href="{% url 'user:sign-in' %}" class="btn btn-outline-secondary">Sign In</a>
+            </div>
+        </div>
     </div>
 
 {% endblock content %}
