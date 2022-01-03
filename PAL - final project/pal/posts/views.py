@@ -31,9 +31,9 @@ def post(request, pk):
         return redirect('posts:post', pk=post.id)
 
     context = {
-    'post': post,
-    'comments': comments
-  }
+        'post': post,
+        'comments': comments
+    }
 
     return render(request, 'posts/post.html', context)
 
@@ -46,7 +46,10 @@ def create_post(request):
         form = PostForm(request.POST)
 
         if form.is_valid():
-            form.save()
+            post = form.save(commit=False)
+            post.user = request.user
+
+            post.save()
 
             return redirect('posts:index')
 
