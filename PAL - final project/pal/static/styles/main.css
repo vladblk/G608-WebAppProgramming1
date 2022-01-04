@@ -90,3 +90,15 @@
     justify-content: center;
     align-items: center;
 }
+
+.homepage {
+    display: flex;
+}
+
+#search_all_input {
+    width: 25rem;
+}
+
+.btn-outline-primary {
+    margin-left: 0;
+}

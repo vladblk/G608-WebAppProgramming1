@@ -1,17 +1,35 @@
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from posts.forms import PostForm
-from posts.models import Post
+from posts.models import Post, Topic
 from comments.models import Comment
 
 # Create your views here.
 
 def index(request):
-    posts = Post.objects.all().order_by('-created')
+
+    if request.GET.get('q') == None:
+        query = ''
+    else:
+        query = request.GET.get('q')
+
+    topics = Topic.objects.all()
+    posts = Post.objects.filter(
+        Q(topic__name__icontains=query) |
+        Q(name__icontains=query) |
+        Q(description__icontains=query) |
+        Q(comment__body__icontains=query) |
+        Q(user__username__icontains=query)
+    ).order_by('-created')
+
+    posts_count = posts.count()
 
     context = {
-        'posts': posts
+        'posts': posts,
+        'topics': topics,
+        'posts_count': posts_count,
     }
 
     return render(request, 'posts/home.html', context)

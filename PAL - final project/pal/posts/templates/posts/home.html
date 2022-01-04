@@ -2,30 +2,15 @@
 
 {% block content %}
 
-<div class="mt-5">
+<div class="row justify-content-md-center mt-5">
 
-    <a href="{% url 'posts:create-post' %}" class="btn btn-outline-success">Create Post</a>
+    <div class="col-9">
+        {% include 'posts/posts_component.html' %}
+    </div>
 
-    {% for post in posts %}
-
-        <div class="card mt-3">
-            <div class="card-header">
-                <p>Posted by <b>@{{ post.user }}</b> - {{ post.created|timesince }} ago</p>
-                <small>Topic: {{ post.topic }}</small>
-            </div>
-            <div class="card-body">
-              <h5>
-                <a class="card-title" href="{% url 'posts:post' post.id %}">{{ post.name }}</a>
-              </h5>
-              <p class="card-text">{{ post.description }}</p>
-            {% if request.user == post.user %}
-                <a href="{% url 'posts:update-post' post.id %}?next={{ request.path|urlencode }}" class="btn btn-outline-secondary">update</a>
-                <a href="{% url 'posts:delete-post' post.id %}?next={{ request.path|urlencode }}" class="btn btn-outline-danger">delete</a>
-            {% endif %}
-            </div>
-          </div>
-
-    {% endfor %}
+    <div class="col-3">
+        {% include 'posts/topics_component.html' %}
+    </div>    
 
 </div>
 
