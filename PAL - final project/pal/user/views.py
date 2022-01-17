@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
@@ -17,8 +18,13 @@ def sign_up(request):
             new_user.username = new_user.username.lower()
             new_user.save()
 
-            return redirect('posts:index')
+            login(request, new_user)
 
+            messages.success(request, 'Successfully created your account!')
+
+            return redirect('posts:index')
+        else:
+            messages.error(request, 'Something went wrong...')
 
     context = {
         'form': form
@@ -43,7 +49,11 @@ def sign_in(request):
         if user is not None:
             login(request, user)
 
+            messages.success(request, f'Welcome back, {username}!')
+
             return redirect('posts:index')
+        else:
+            messages.error(request, 'Something went wrong...')
 
     return render(request, 'user/signin.html')
 
@@ -51,6 +61,8 @@ def sign_in(request):
 def log_out(request):
     if request.user.is_authenticated:
         logout(request)
+
+        messages.success(request, 'Successfully logged  you out! See you soon.')
 
         return redirect('posts:index')
     else:

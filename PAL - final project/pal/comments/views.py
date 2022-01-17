@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
+from django.contrib import messages
 from posts import forms
 from .models import Comment
 from .forms import CommentForm
@@ -21,7 +22,11 @@ def update_comment(request, pk):
         if form.is_valid():
             form.save()
 
+            messages.success(request, 'Successfully updated your comment!')
+
             return HttpResponseRedirect(next)
+        else:
+            messages.error(request, 'Something went wrong...')
 
     context = {
         'comment': comment,
@@ -41,6 +46,8 @@ def delete_comment(request, pk):
     if request.method == 'POST':
         next = request.POST.get('next', '/')
         comment.delete()
+
+        messages.success(request, 'Successfully deleted your comment!')
 
         return HttpResponseRedirect(next)
 

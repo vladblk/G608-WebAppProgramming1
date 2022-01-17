@@ -2,6 +2,7 @@ from django.http.response import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.contrib import messages
 from posts.forms import PostForm
 from posts.models import Post, Topic
 from comments.models import Comment
@@ -47,6 +48,8 @@ def post(request, pk):
             body = request.POST.get('comment')
         )
 
+        messages.success(request, 'Successfully added your new comment!')
+
         return redirect('posts:post', pk=post.id)
 
     context = {
@@ -71,7 +74,11 @@ def create_post(request):
 
             post.save()
 
+            messages.success(request, 'Successfully created your new post!')
+
             return redirect('posts:index')
+        else:
+            messages.error(request, 'Something went wrong...')
 
 
     context = {
@@ -96,7 +103,11 @@ def update_post(request, pk):
         if form.is_valid():
             form.save()
 
+            messages.success(request, 'Successfully updated your post!')
+
             return HttpResponseRedirect(next)
+        else:
+            messages.error(request, 'Something went wrong...')
 
     context = {
         'post': post,
@@ -116,8 +127,11 @@ def delete_post(request, pk):
     if request.method == 'POST':
         post.delete()
 
+        messages.success(request, 'Successfully deleted your post!')
+
         return redirect('posts:index')
-        # return redirect(request.META.get('HTTP_REFERER')) # NOT WORKING!!!
+    else:
+        messages.error(request, 'Something went wrong...')
 
     context = {
         'to_delete': post

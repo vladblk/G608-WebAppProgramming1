@@ -9,11 +9,24 @@
 
 {% for post in posts %}
 
+    {% if post.topic_set.all.count == 0 %}
+        <h1>No posts :(</h1>
+    {% endif %}
+
     <div class="card mt-3">
 
-        <div class="card-header">
-            <p>Posted by <b>@{{ post.user }}</b> - {{ post.created|timesince }} ago</p>
-            <small>Topic: <a href="{% url 'posts:index' %}?q={{ post.topic.name }}" class="text-muted">{{ post.topic }}</a></small>
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <div>
+                <p>Posted by <b>@{{ post.user }}</b> - {{ post.created|timesince }} ago</p>
+                <small>Topic: <a href="{% url 'posts:index' %}?q={{ post.topic.name }}" class="text-muted">{{ post.topic }}</a></small>
+            </div>
+
+            {% if request.user == post.user %}
+            <div>
+                <a href="{% url 'posts:update-post' post.id %}?next={{ request.path|urlencode }}" class="btn btn-outline-secondary">update</a>
+                <a href="{% url 'posts:delete-post' post.id %}?next={{ request.path|urlencode }}" class="btn btn-outline-danger">delete</a>
+            </div>
+            {% endif %}
         </div>
 
         <div class="card-body">
@@ -24,11 +37,6 @@
             <small class="d-block mb-1">
                 <a href="{% url 'posts:post' post.id %}" class=" text-muted">{{ post.comment_set.all.count }} comments</a>
             </small>
-
-            {% if request.user == post.user %}
-                <a href="{% url 'posts:update-post' post.id %}?next={{ request.path|urlencode }}" class="btn btn-outline-secondary">update</a>
-                <a href="{% url 'posts:delete-post' post.id %}?next={{ request.path|urlencode }}" class="btn btn-outline-danger">delete</a>
-            {% endif %}
         </div>
     </div>
 
