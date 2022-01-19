@@ -24,7 +24,7 @@ def sign_up(request):
 
             return redirect('posts:index')
         else:
-            messages.error(request, 'Something went wrong...')
+            messages.error(request, 'Oops! Something went wrong...', extra_tags='danger')
 
     context = {
         'form': form
@@ -53,7 +53,7 @@ def sign_in(request):
 
             return redirect('posts:index')
         else:
-            messages.error(request, 'Something went wrong...')
+            messages.error(request, 'Oops! Something went wrong...', extra_tags='danger')
 
     return render(request, 'user/signin.html')
 

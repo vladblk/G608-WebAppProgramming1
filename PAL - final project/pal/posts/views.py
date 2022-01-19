@@ -90,24 +90,32 @@ def create_post(request):
 
 @login_required(login_url='user:sign-in')
 def update_post(request, pk):
-    post = Post.objects.get(id=pk)
-    form = PostForm(instance=post) # get the instance of the specific post - prefill the inputs in the form
+    post = None
+    form = None
+    try:
+        post = Post.objects.get(id=pk)
+        form = PostForm(instance=post) # get the instance of the specific post - prefill the inputs in the form
 
-    if request.user != post.user:
-        return render(request, 'not_allowed.html')
+        if request.user != post.user:
+            messages.error(request, 'Oops! Something went wrong...', extra_tags='danger')
+            return redirect('posts:index')
 
-    if request.method == 'POST':
-        form = PostForm(request.POST, instance=post) # if instance is not specified here again, it will create a new post instead of updating
-        next = request.POST.get('next', '/')
+        if request.method == 'POST':
+            form = PostForm(request.POST, instance=post) # if instance is not specified here again, it will create a new post instead of updating
+            next = request.POST.get('next', '/')
 
-        if form.is_valid():
-            form.save()
+            if form.is_valid():
+                form.save()
 
-            messages.success(request, 'Successfully updated your post!')
+                messages.success(request, 'Successfully updated your post!')
 
-            return HttpResponseRedirect(next)
-        else:
-            messages.error(request, 'Something went wrong...')
+                return HttpResponseRedirect(next)
+            else:
+                messages.error(request, 'Something went wrong...')
+    except Post.DoesNotExist:
+        messages.error(request, 'Oops! Something went wrong...', extra_tags='danger')
+        return redirect('posts:index')
+
 
     context = {
         'post': post,
@@ -119,19 +127,24 @@ def update_post(request, pk):
 
 @login_required(login_url='user:sign-in')
 def delete_post(request, pk):
-    post = Post.objects.get(id=pk)
+    post = None
+    try:
+        post = Post.objects.get(id=pk)
 
-    if request.user != post.user:
-        return render(request, 'not_allowed.html')
+        if request.user != post.user:
+            messages.error(request, 'Oops! Something went wrong...', extra_tags='danger')
+            return redirect('posts:index')
 
-    if request.method == 'POST':
-        post.delete()
+        if request.method == 'POST':
+            post.delete()
 
-        messages.success(request, 'Successfully deleted your post!')
+            messages.success(request, 'Successfully deleted your post!')
 
+            return redirect('posts:index')
+
+    except Post.DoesNotExist:
+        messages.error(request, 'Oops! Something went wrong...', extra_tags='danger')
         return redirect('posts:index')
-    else:
-        messages.error(request, 'Something went wrong...')
 
     context = {
         'to_delete': post
